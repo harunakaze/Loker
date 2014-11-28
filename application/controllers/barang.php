@@ -15,12 +15,20 @@ class Barang extends CI_Controller
 
 		$data['barang'] = $this->transaksi->daftar();
 
+		$this->load->view('header');
+		$this->load->view('navbar');
 		$this->load->view('daftar_barang', $data);
+		$this->load->view('footer');
 	}
 
 	public function tambah() 
 	{	
-		if($this->input->post('simpan'))
+		$this->form_validation->set_rules('nama', 'Nama', 'required');
+		$this->form_validation->set_rules('no_hp', 'Nomor Handphone', 'required|numeric');
+		$this->form_validation->set_rules('no_loker', 'Nomor Loker', 'required|alpha_numeric');
+		
+		//if($this->input->post('simpan'))
+		if($this->form_validation->run())
 		{
 			$data['nama_pengguna'] = $this->input->post('nama');
 			$data['no_hp'] = $this->input->post('no_hp');
@@ -36,7 +44,10 @@ class Barang extends CI_Controller
 		}
 		else
 		{
+			$this->load->view('header');
+			$this->load->view('navbar');
 			$this->load->view('form_penitipan');
+			$this->load->view('footer');
 		}
 	}
 	
